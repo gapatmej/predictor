@@ -1,0 +1,51 @@
+<div class="container"> 
+    <form [formGroup]="formHome" (ngSubmit)="onSubmit(formHome.value)">
+        <div class="form-group">
+          <label for="licensePlateNumber">Placa</label>
+          <input type="text" class="form-control" id="licensePlateNumber" formControlName="licensePlateNumber"  placeholder="Ingrese el número de placa">
+        </div>
+        <div class="form-group">
+            <label for="date">Fecha</label>
+            <input type="date" class="form-control" id="date" formControlName="date"  placeholder="Ingrese la fecha a consultar">
+        </div>
+        <div class="form-group">
+            <label>Hora</label>
+            <div class="form-inline">
+                <label class="col-6 float-sm-left" for="hours ">HH : 
+                    <input class="form-control col-3" type="number" value="42" id="hours" formControlName="hours">
+                </label>
+                
+                <label class="col-6 float-sm-left" for="exampleInputEmail1">MM : 
+                    <input class="form-control col-3" type="number" value="42" id="minutes" formControlName="minutes">
+                </label>
+                
+            </div>
+            
+        </div>
+      
+        <button type="submit" class="btn btn-primary" >Consultar</button>
+      </form>
+
+      <table class="table">
+        <thead class="thead-dark">
+          <tr >
+            <th scope="col"># </th>
+            <th scope="col">Ultimo dígito de la Placa</th>
+            <th scope="col">Día</th>
+            <th scope="col">Desde</th>
+            <th scope="col">Hasta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let restricion of restrictions; let i = index">
+            <th scope="row">{{i}}</th>
+            <td>Placas terminadas en {{restricion.plateNumber}}</td>
+            <td>{{restricion.day}}</td>
+            <td>{{restricion.schedule.fromHour}}:{{restricion.schedule.fromMinute}}</td>
+            <td>{{restricion.schedule.toHour}}:{{restricion.schedule.toMinute}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+</div>
