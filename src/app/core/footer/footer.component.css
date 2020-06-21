@@ -1,0 +1,23 @@
+footer {
+    min-height: 0%;
+    width: 100%;
+    position: fixed;
+    bottom: -35px;
+  }
+
+.imgPrimero{
+  width: 20%;
+  height: 20%;
+  position: relative;
+  top: 30%;
+}
+
+.imgSegundo{
+width: 25%;
+height: 25%;
+position: relative;
+top: 30%;
+}
+
+
+
