@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -46,7 +47,7 @@ public class RestrictionServiceImpl implements RestrictionService {
     Pattern pattern = Pattern.compile(Utils.PATTERN_PLATE_NUMBER);
     Matcher matcher = pattern.matcher(licensePlateNumber);
     if (!matcher.matches()) {
-      throw new PredictorException("aaaa", ErrorConstants.PLATE_NUMBER_INCORRECT);
+      throw new PredictorException(ErrorConstants.PLATE_NUMBER_INCORRECT);
     }
 
     Date dateFormat = null;
@@ -71,8 +72,20 @@ public class RestrictionServiceImpl implements RestrictionService {
     SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
     Day day = Day.get(simpleDateformat.format(dateFormat));
 
-    Optional<List<Restriction>> restrictions = restrictionRepository.getRestrictions(numberPlate, day, hours, minutes);
-    return restrictions.map(restrictionMapper::toDto);
+    List<Restriction> restrictions = restrictionRepository.getRestrictions(numberPlate, day, hours);
+    restrictions = restrictions.stream().filter(i -> {
+      if (i.getSchedule().getFromHour() == hours && minutes < i.getSchedule().getFromMinute())
+          return false;
+
+      if(i.getSchedule().getToHour() == hours && minutes > i.getSchedule().getToMinute())
+        return false;
+
+      return true;
+    }).collect(Collectors.toList());
+
+    Optional<List<Restriction>> optionalRestrictions = Optional.ofNullable(restrictions.size()==0?null:restrictions);
+
+    return optionalRestrictions.map(restrictionMapper::toDto);
   }
 
 }

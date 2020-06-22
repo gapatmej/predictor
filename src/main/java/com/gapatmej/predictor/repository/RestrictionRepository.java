@@ -14,7 +14,6 @@ import java.util.Optional;
 public interface RestrictionRepository extends JpaRepository<Restriction, Long> {
 
   @Query(" SELECT r FROM Restriction r WHERE r.plateNumber =:plateNumber and r.day = :day " +
-    " AND r.schedule.fromHour <= :hours AND r.schedule.fromMinute <= :minutes " +
-    " AND r.schedule.toHour >= :hours AND r.schedule.toMinute >= :minutes ")
-  Optional<List<Restriction>> getRestrictions(@Param("plateNumber") int plateNumber, @Param("day") Day day, @Param("hours") int hours, @Param("minutes") int minutes);
+    " AND :hours >= r.schedule.fromHour AND :hours <= r.schedule.toHour" )
+  List<Restriction> getRestrictions(@Param("plateNumber") int plateNumber, @Param("day") Day day, @Param("hours") int hours);
 }

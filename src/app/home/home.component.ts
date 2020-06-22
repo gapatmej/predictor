@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
   }
 
   private onError(error) {
-
+    this.restrictions = null;
     if(error.status === HttpStatus.NOT_FOUND ){
       this.alertService.success("¡ No tienes restricciones, puedes circular !");
       return;
