@@ -36,6 +36,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     * Run this class like main:
     ![Version](src/imagesReadme/runPredictorApplication.png)
 
+## :arrow_forward: How to restore database
+1. Create database 
+2. Run 
+```sh
+    psql -h hostname -p port_number -U username -f your_file.sql -d databasename
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
