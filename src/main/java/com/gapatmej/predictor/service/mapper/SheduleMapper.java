@@ -11,12 +11,4 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SheduleMapper extends EntityMapper<ScheduleDTO, Schedule> {
 
-    default Schedule fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Schedule schedule = new Schedule();
-        schedule.setId(id);
-        return schedule;
-    }
 }

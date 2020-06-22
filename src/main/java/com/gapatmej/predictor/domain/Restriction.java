@@ -2,7 +2,6 @@ package com.gapatmej.predictor.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gapatmej.predictor.domain.enumeration.Day;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
