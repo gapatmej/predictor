@@ -8,5 +8,5 @@ import java.util.Optional;
 
 
 public interface RestrictionService {
-    Optional<List<RestrictionDTO>> findRestrictions (String licensePlateNumber, String day, int hours, int minutes) throws PredictorException;
+  Optional<List<RestrictionDTO>> findRestrictions(String licensePlateNumber, String day, int hours, int minutes) throws PredictorException;
 }

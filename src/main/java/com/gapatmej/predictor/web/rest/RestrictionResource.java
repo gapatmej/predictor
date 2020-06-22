@@ -8,7 +8,6 @@ import com.gapatmej.predictor.web.rest.error.BadRequestAlertException;
 import com.gapatmej.predictor.web.rest.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +25,7 @@ public class RestrictionResource {
   private final Logger log = LoggerFactory.getLogger(RestrictionResource.class);
 
   private final RestrictionService restrictionService;
+
 
   public RestrictionResource(RestrictionService restrictionService) {
     this.restrictionService = restrictionService;

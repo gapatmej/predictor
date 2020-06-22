@@ -20,6 +20,7 @@ dependencies {
 	compile "org.mapstruct:mapstruct-jdk8:1.2.0.Final"
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
   compile group: 'com.codahale.metrics', name: 'metrics-annotation', version: '3.0.2'
+  testCompile "junit:junit"
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.2.0.Final"
 	compile "org.zalando:problem-spring-web:0.24.0-RC.0"
 	runtimeOnly 'org.postgresql:postgresql'

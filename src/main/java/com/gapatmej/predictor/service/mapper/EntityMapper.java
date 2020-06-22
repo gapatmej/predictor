@@ -2,13 +2,13 @@ package com.gapatmej.predictor.service.mapper;
 
 import java.util.List;
 
-public interface EntityMapper <D, E> {
+public interface EntityMapper<D, E> {
 
-    E toEntity(D dto);
+  E toEntity(D dto);
 
-    D toDto(E entity);
+  D toDto(E entity);
 
-    List<E> toEntity(List<D> dtoList);
+  List<E> toEntity(List<D> dtoList);
 
-    List <D> toDto(List<E> entityList);
+  List<D> toDto(List<E> entityList);
 }

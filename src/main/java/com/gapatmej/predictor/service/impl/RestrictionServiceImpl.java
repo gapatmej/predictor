@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.rmi.CORBA.Util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,24 +45,25 @@ public class RestrictionServiceImpl implements RestrictionService {
 
     Pattern pattern = Pattern.compile(Utils.PATTERN_PLATE_NUMBER);
     Matcher matcher = pattern.matcher(licensePlateNumber);
-    if(!matcher.matches()){
-      throw new PredictorException("aaaa",ErrorConstants.PLATE_NUMBER_INCORRECT);
+    if (!matcher.matches()) {
+      throw new PredictorException("aaaa", ErrorConstants.PLATE_NUMBER_INCORRECT);
     }
 
     Date dateFormat = null;
-    try{
+    try {
       DateFormat format = new SimpleDateFormat(Utils.DATE_FORMAT_DDMMYYYY, Locale.ENGLISH);
-      dateFormat = format.parse(date);;
-    }catch(ParseException e){
+      dateFormat = format.parse(date);
+      ;
+    } catch (ParseException e) {
       log.error(e.getMessage());
       throw new PredictorException(ErrorConstants.DATE_INCORRECT);
     }
 
-    if(hours < 0 || hours > 24){
+    if (hours < 0 || hours > 24) {
       throw new PredictorException(ErrorConstants.HOUR_INCORRECT);
     }
 
-    if(minutes < 0 || minutes > 60){
+    if (minutes < 0 || minutes > 60) {
       throw new PredictorException(ErrorConstants.MINUTE_INCORRECT);
     }
 
@@ -71,7 +71,7 @@ public class RestrictionServiceImpl implements RestrictionService {
     SimpleDateFormat simpleDateformat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
     Day day = Day.get(simpleDateformat.format(dateFormat));
 
-    Optional<List<Restriction>> restrictions = restrictionRepository.getRestrictions(numberPlate,day, hours, minutes);
+    Optional<List<Restriction>> restrictions = restrictionRepository.getRestrictions(numberPlate, day, hours, minutes);
     return restrictions.map(restrictionMapper::toDto);
   }
 
