@@ -1,23 +1,16 @@
-footer {
-    min-height: 0%;
-    width: 100%;
-    position: fixed;
-    bottom: -35px;
+  .footer{
+      width: 80%;
+      margin: 0 auto; 
   }
-
-.imgPrimero{
-  width: 20%;
-  height: 20%;
-  position: relative;
-  top: 30%;
-}
-
-.imgSegundo{
-width: 25%;
-height: 25%;
-position: relative;
-top: 30%;
-}
-
-
-
+  .fixed-footer{
+      width: 100%;
+      position: fixed;        
+      background: #f1f1f1;
+      padding: 10px 0;
+      color: black;
+  }
+  .fixed-footer{
+      bottom: 0;
+  }    
+ 
+  
