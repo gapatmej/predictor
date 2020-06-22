@@ -4,6 +4,9 @@ import { HttpResponse } from '@angular/common/http';
 
 import { RestrictionService } from './../services/restriction.service'
 import { IRestriction } from '../shared/model/restriction.model';
+import { AlertService } from '../alert';
+
+import * as HttpStatus from 'http-status-codes'
 
 @Component({
   selector: 'app-home',
@@ -17,7 +20,13 @@ export class HomeComponent implements OnInit {
 
   get f() { return this.formHome.controls; }
 
-  constructor(private formBuilder: FormBuilder, private restrictionService: RestrictionService) {
+  options = {
+    autoClose: true,
+    keepAfterRouteChange: false
+  };
+
+  constructor(private formBuilder: FormBuilder, private restrictionService: RestrictionService,
+    protected alertService: AlertService) {
     this.formHome = this.formBuilder.group({
       licensePlateNumber: ['', Validators.required],
       date: ['', Validators.required],
@@ -29,20 +38,24 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  pruebas(){
+    this.alertService.success('aaaa!!');
+  }
+
   onSubmit() {
     this.submitted = true;
-    console.log(this.formHome);
 
-    // stop here if form is invalid
     if (this.formHome.invalid) {
       return;
     }
 
+    let params = { ...this.formHome.value };
+    params.date = params.date.replace(/\//g, '');
     this.restrictionService
-      .find(this.formHome.value)
+      .find(params)
       .subscribe(
-        (res: HttpResponse<IRestriction[]>) => this.onSuccess(res.body),
-        (res: HttpResponse<any>) => this.onError(res.body)
+        (res: HttpResponse<IRestriction[]>) => this.onNotPermited(res.body),
+        (res: HttpResponse<any>) => this.onError(res)
       );
   }
 
@@ -50,20 +63,27 @@ export class HomeComponent implements OnInit {
     this.submitted = false;
     this.formHome.reset();
   }
-  
-  onGetCurrentDate(){
+
+  onGetCurrentDate() {
     let date = new Date();
     this.formHome.controls.date.setValue(date.toLocaleDateString('en-GB'));
     this.formHome.controls.hours.setValue(date.getHours());
     this.formHome.controls.minutes.setValue(date.getMinutes());
   }
 
-  private onSuccess(data) {
+  private onNotPermited(data) {
     this.restrictions = data;
+    this.alertService.warn("¡ Tienes restricciones, no puedes circular !");
   }
 
   private onError(error) {
-    alert(error);
+
+    if(error.status === HttpStatus.NOT_FOUND ){
+      this.alertService.success("¡ No tienes restricciones, puedes circular !");
+      return;
+    }
+
+    this.alertService.error("Error!! Intentalo mas tarde");
   }
 
 }
