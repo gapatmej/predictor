@@ -52,8 +52,8 @@ public class RestrictionServiceImpl implements RestrictionService {
     Date dateFormat = null;
     try {
       DateFormat format = new SimpleDateFormat(Utils.DATE_FORMAT_DDMMYYYY, Locale.ENGLISH);
+      format.setLenient(false);
       dateFormat = format.parse(date);
-      ;
     } catch (ParseException e) {
       log.error(e.getMessage());
       throw new PredictorException(ErrorConstants.DATE_INCORRECT);
