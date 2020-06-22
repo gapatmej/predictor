@@ -8,11 +8,6 @@ public class PredictorException extends Exception {
     super(message);
   }
 
-  public PredictorException(String message, String keyMessage) {
-    super(message);
-    this.keyMessage = keyMessage;
-  }
-
   public String getKeyMessage() {
     return keyMessage;
   }
