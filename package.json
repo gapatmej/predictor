@@ -23,6 +23,7 @@
     "@angular/router": "~9.1.11",
     "@angular/service-worker": "~9.1.11",
     "bootstrap": "^4.5.0",
+    "http-status-codes": "^1.4.0",
     "jquery": "^3.5.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

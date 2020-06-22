@@ -1,51 +1,81 @@
-<div class="container"> 
-    <form [formGroup]="formHome" (ngSubmit)="onSubmit(formHome.value)">
-        <div class="form-group">
-          <label for="licensePlateNumber">Placa</label>
-          <input type="text" class="form-control" id="licensePlateNumber" formControlName="licensePlateNumber"  placeholder="Ingrese el número de placa">
-        </div>
-        <div class="form-group">
-            <label for="date">Fecha</label>
-            <input type="date" class="form-control" id="date" formControlName="date"  placeholder="Ingrese la fecha a consultar">
-        </div>
-        <div class="form-group">
-            <label>Hora</label>
-            <div class="form-inline">
-                <label class="col-6 float-sm-left" for="hours ">HH : 
-                    <input class="form-control col-3" type="number" value="42" id="hours" formControlName="hours">
-                </label>
-                
-                <label class="col-6 float-sm-left" for="exampleInputEmail1">MM : 
-                    <input class="form-control col-3" type="number" value="42" id="minutes" formControlName="minutes">
-                </label>
-                
-            </div>
-            
-        </div>
-      
-        <button type="submit" class="btn btn-primary" >Consultar</button>
-      </form>
+<div class="container">
+  <form [formGroup]="formHome" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Placa</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.licensePlateNumber.errors }"
+        formControlName="licensePlateNumber" placeholder="Ingrese el número de placa" pattern="^[A-Za-z]{3}( |-)[0-9]{3,4}$">
+      <div *ngIf="submitted && f.licensePlateNumber.errors" class="invalid-feedback">
+        <div *ngIf="f.licensePlateNumber.errors.required">Numero de Placa requerida</div>
+      </div>
+      <div *ngIf="submitted && f.licensePlateNumber.errors" class="invalid-feedback">
+        <div *ngIf="f.licensePlateNumber.errors.pattern">El formato de placa es incorrecto</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Fecha</label>
+      <input type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.date.errors }"
+        formControlName="date" placeholder="Ingrese la fecha a consultar" pattern="^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$">
+      <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+        <div *ngIf="f.date.errors.required">Fecha requerida</div>
+      </div>
+      <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+        <div *ngIf="f.date.errors.pattern">El formato de fecha es incorrecto dd/mm/yyyy</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Hora</label>
+      <input class="form-control col-lg-1 col-md-2 col-sm-2" type="number" [ngClass]="{'is-invalid': submitted && f.hours.errors }"
+        formControlName="hours" pattern="\b([0-9]|1[0-9]|2[0-3])\b">
+      <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+        <div *ngIf="f.hours.errors.required">Hora Requerida</div>
+      </div>
+      <div *ngIf="submitted && f.hours.errors" class="invalid-feedback">
+        <div *ngIf="f.hours.errors.pattern">El rango debe estar entre 0 y 23</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Minutos</label>
+      <input class="form-control col-lg-1 col-md-2 col-sm-2" type="number" [ngClass]="{'is-invalid': submitted && f.minutes.errors }"
+        formControlName="minutes" pattern="\b([0-9]|[1-5][0-9]|59)\b">
+      <div *ngIf="submitted && f.minutes.errors" class="invalid-feedback">
+        <div *ngIf="f.minutes.errors.required">Minutos Requeridos</div>
+      </div>
+      <div *ngIf="submitted && f.minutes.errors" class="invalid-feedback">
+        <div *ngIf="f.minutes.errors.pattern">El rango debe estar entre 0 y 59</div>
+      </div>
+    </div>
 
-      <table class="table">
-        <thead class="thead-dark">
-          <tr >
-            <th scope="col"># </th>
-            <th scope="col">Ultimo dígito de la Placa</th>
-            <th scope="col">Día</th>
-            <th scope="col">Desde</th>
-            <th scope="col">Hasta</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let restricion of restrictions; let i = index">
-            <th scope="row">{{i}}</th>
-            <td>Placas terminadas en {{restricion.plateNumber}}</td>
-            <td>{{restricion.day}}</td>
-            <td>{{restricion.schedule.fromHour}}:{{restricion.schedule.fromMinute}}</td>
-            <td>{{restricion.schedule.toHour}}:{{restricion.schedule.toMinute}}</td>
-          </tr>
-        </tbody>
-      </table>
-      
+    <div class="text-center">
+      <button class="btn btn-primary mr-1">Consultar</button>
+      <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Limpiar</button>
+      <button class="btn btn-success" type="button" (click)="onGetCurrentDate()">Obtener Fecha y Hora Actual</button>
+    </div>
+    <alert></alert>
+  </form>
+  <button class="btn btn-success m-1" (click)="pruebas()">Success</button>
+</div>
 
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+  <div class="row">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"># </th>
+          <th scope="col">Ultimo dígito de la Placa</th>
+          <th scope="col">Día</th>
+          <th scope="col">Desde</th>
+          <th scope="col">Hasta</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let restricion of restrictions; let i = index">
+          <th scope="row">{{i}}</th>
+          <td>Placas terminadas en {{restricion.plateNumber}}</td>
+          <td>{{restricion.day}}</td>
+          <td>{{restricion.schedule.fromHour}}:{{restricion.schedule.fromMinute}}</td>
+          <td>{{restricion.schedule.toHour}}:{{restricion.schedule.toMinute}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

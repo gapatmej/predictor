@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from "@angular/common/http";
-
+import { AlertModule } from './alert';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { HttpClientModule } from "@angular/common/http";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AlertModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
