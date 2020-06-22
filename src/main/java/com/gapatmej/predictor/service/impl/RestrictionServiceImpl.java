@@ -59,11 +59,11 @@ public class RestrictionServiceImpl implements RestrictionService {
       throw new PredictorException(ErrorConstants.DATE_INCORRECT);
     }
 
-    if (hours < 0 || hours > 24) {
+    if (hours < 0 || hours > 23) {
       throw new PredictorException(ErrorConstants.HOUR_INCORRECT);
     }
 
-    if (minutes < 0 || minutes > 60) {
+    if (minutes < 0 || minutes > 59) {
       throw new PredictorException(ErrorConstants.MINUTE_INCORRECT);
     }
 
