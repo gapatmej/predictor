@@ -18,7 +18,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 1. cd to the repo
 2. Open environments/enviroment.ts
     * Set the url value API into SERVER_API_URL
- ![Version](/imagesReadme/environment.png)
+ ![Version](src/imagesReadme/environment.png)
 3. run ng serve
 
 ## :arrow_forward: How to Run API
@@ -31,10 +31,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     spring.datasource.username=Set user database
     spring.datasource.password=Set password user database
     ```
- ![Version](/imagesReadme/properties.png)
+ ![Version](src/imagesReadme/properties.png)
 2. Open predictor\src\main\java\com\gapatmej\predictor\PredictorApplication.java
     * Run this class like main:
-    ![Version](/imagesReadme/runPredictorApplication.png)
+    ![Version](src/imagesReadme/runPredictorApplication.png)
 
 ## Development server
 
